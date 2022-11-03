@@ -1,0 +1,24 @@
+{
+  "name": "unloosen-ruby-loader",
+  "description": "ruby on wasm for chrome extension",
+  "license": "MIT",
+  "version": "0.0.1",
+  "main": "./src/index.js",
+  "umd:main": "./dist/index.umd.js",
+  "files": [
+    "dist",
+    "src",
+    "package.json"
+  ],
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "ruby-head-wasm-wasi": "^0.3.0",
+    "webpack": "^5.74.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.10.0"
+  }
+}
