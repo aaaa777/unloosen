@@ -10,6 +10,7 @@
     "src",
     "package.json"
   ],
+  "repository": "https://github.com/aaaa777/unloosen.git",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
