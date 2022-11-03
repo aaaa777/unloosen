@@ -10,3 +10,7 @@
 # rspec failure tracking
 .rspec_status
 *.gem
+
+/template/*
+
+/packages/unloosen-ruby/node_modules
