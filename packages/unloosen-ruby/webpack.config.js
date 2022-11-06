@@ -5,7 +5,12 @@ module.exports = {
   mode: 'development',
 
   // エントリーポイントの設定
-  entry: `./src/index.js`,
+  entry: {
+    index: "./src/index.js",
+    "service-worker": "./src/service-worker.js",
+    "content-script": "./src/content-script.js",
+    "init-ruby": "./src/init-ruby.js"
+  },
 
   experiments: {
     topLevelAwait: true
@@ -14,7 +19,7 @@ module.exports = {
   // ファイルの出力設定
   output: {
     // 出力するファイル名
-    filename: "index.umd.js",
+    filename: "[name].umd.js",
     library: 'unloosenRubyLoader',
     libraryTarget: 'umd',
     //  出力先のパス

@@ -1,8 +1,19 @@
 import { DefaultRubyVM } from "ruby-head-wasm-wasi/dist/browser.umd.js";
 export var UnloosenRubyVM;
 
+export const UnloosenVersion = "0.0.2";
+export const printInitMessage = () => {
+    evalRubyCode(`
+    puts <<-"INF"
+Unloosen Ruby Browser Extension by logiteca7/aaaa777
+Ruby version: #{RUBY_DESCRIPTION}
+Unloosen version: ${UnloosenVersion}
+    INF
+`);
+};
+
 const buildExtensionURL = (filepath) => {
-    return new URL(filepath, `chrome-extension://${chrome.runtime.id}/`);
+    return new URL(chrome.runtime.getURL(filepath));
 }
 
 export const initRubyVM = async () => {
@@ -25,7 +36,6 @@ export const evalRubyFileFromURL = async (url) => {
         })
         .then((response) => response.text())
         .then((text) => {
-            console.log(text);
             UnloosenRubyVM.eval(text);
         });
 
