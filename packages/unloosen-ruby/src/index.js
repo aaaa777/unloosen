@@ -28,17 +28,8 @@ export const initRubyVM = async () => {
 // eval ruby script
 export const evalRubyFileFromURL = async (url) => {
     await fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Chrome Extension fetch error! Status: ${response.status}`);
-            }
-            return response;
-        })
         .then((response) => response.text())
-        .then((text) => {
-            UnloosenRubyVM.eval(text);
-        });
-
+        .then((text) => evalRubyCode(text));
 };
 
 // build chrome-extension:// url and eval ruby script

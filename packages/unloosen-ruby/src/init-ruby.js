@@ -1,4 +1,4 @@
-import { initRubyVM, evalRubyFileFromExtension, evalRubyCode, evalRubyFileFromURL, getUnloosenVersion} from "./index.js";
+import { initRubyVM, evalRubyFileFromExtension, evalRubyCode, evalRubyFileFromURL, printInitMessage } from "./index.js";
 
 await initRubyVM();
 printInitMessage();
