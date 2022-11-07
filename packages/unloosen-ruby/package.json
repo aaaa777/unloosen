@@ -2,7 +2,7 @@
   "name": "unloosen-ruby-loader",
   "description": "ruby on wasm for chrome extension",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./src/index.js",
   "umd:main": "./dist/index.umd.js",
   "files": [
