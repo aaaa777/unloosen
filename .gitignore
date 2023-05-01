@@ -14,3 +14,10 @@
 /template/*
 
 /packages/unloosen-ruby/node_modules
+
+.ruby-version
+
+/vendor/bundle
+/tools/*
+
+!.gitkeep

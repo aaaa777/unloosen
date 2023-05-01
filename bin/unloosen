@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+#require "bundler/setup"
+#require "unloosen"
+
+guide_text = {
+    help_subcmd:
+        "usage: unloosen [subcommand] <options>\ntype unloosen help to view more details"
+}
+
+require "optparse"
+
+opt = OptionParser.new
+
+params = {}
+subcmd = ARGV.first
+
+opt.on("-v")
+opt.on("--file FILENAME")
+opt.on("build")
+
+opt.parse!(ARGV, into: params)
+
+p ARGV
+p subcmd
+p params
+
+# project init
+if subcmd == "init"
+    require "unloosen"
+    
+
+
+end
+
+# version command
+if subcmd == "version"
+    #require "bundler/setup"
+    require "unloosen/version"
+    
+    version = Unloosen::Version
+
+    
+end
+
+
+# build command
+if subcmd == "build"
+    
+end
+
+# help command
+if subcmd == "help"
+    print 
+`Unloosen: Browser Extension Builder with Ruby
+Abailable options are below
+
+unloosen init [option]:\tcreate new project under current directory
+unloosen build [option]:\tbuild the project
+unloosen status:\tshow project status
+`
+end

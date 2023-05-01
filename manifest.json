@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "unloosen-dev",
+    "description": "this extension is built by unloosen with ruby!",
+    "version": "0.0.1",
+    "background": {
+        //"service_worker": "packages/unloosen-ruby/dist/unloosen-simple.umd.js"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                // "packages/unloosen-ruby/dist/unloosen-simple.umd.js",
+                // "packages/unloosen-ruby/src/inject-script.js"
+                "packages/unloosen-ruby/src/loader.js"
+            ],
+            "matches": ["http://www.example.com/", "https://www.google.com/*"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["*"],
+          "matches": ["<all_urls>"]
+        }
+    ]
+}
