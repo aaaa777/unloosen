@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "unloosen/compat/rubygems"
-require_relative "unloosen/js_wrapper"
+require_relative "unloosen/load-type/content-script"
+#require_relative "unloosen/compat/rubygems"
+#require_relative "unloosen/js_wrapper"
 #require_relative "unloosen/controller"
 #require_relative "unloosen/utils"
 #require_relative "unloosen/version"

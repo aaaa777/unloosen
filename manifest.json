@@ -11,7 +11,7 @@
             "js": [
                 // "packages/unloosen-ruby/dist/unloosen-simple.umd.js",
                 // "packages/unloosen-ruby/src/inject-script.js"
-                "packages/unloosen-ruby/src/loader.js"
+                "packages/unloosen-ruby/dist/entry/loader-cs.esm.js"
             ],
             "matches": ["http://www.example.com/", "https://www.google.com/*"]
         }

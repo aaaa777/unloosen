@@ -1,5 +1,5 @@
-require_relative "page"
-require_relative "event_container"
+#require_relative "page"
+require_relative "./event/event_container"
 
 module Unloosen
 

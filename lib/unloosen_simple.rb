@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 #require_relative "unloosen"
-require_relative "unloosen/util"
+#require_relative "unloosen/util"
+require "unloosen/version"
+require "unloosen/event"
 
 module Unloosen
-  class Error < StandardError; end
-  # Your code goes here...
+  module  Unloosen::BaseController
+  end
 end

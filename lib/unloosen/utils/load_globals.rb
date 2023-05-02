@@ -1,5 +1,4 @@
-
-require "erb"
+#require "erb"
 
 class << self
 
@@ -23,4 +22,5 @@ class << self
     def document; JS.global; end
     def console; JS.global[:console]; end
     def fetch(args**); JS.global.fetch(args); end
+    #p JS.global[:Object][:keys].call(:call, JS.global, (JS.global[:window])).inspect.split(",")
 end

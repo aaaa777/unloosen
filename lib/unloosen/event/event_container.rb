@@ -1,9 +1,7 @@
-require_relative "utils"
-
 module Unloosen
-    class EventContainer
+    class Container
 
-        include Unloosen::Utils
+        #include Unloosen::Utils
 
         def initialize
             # @routing_type = :popup if self.is_popup?
