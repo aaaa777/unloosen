@@ -9,11 +9,14 @@ require "unloosen"
     # popup last value
     "テストメッセージ"
 #end
-
+p "app loaded"
+JS.global.console.log("load test")
 # when load site
-Unloosen::LoadType::ContentScript sites: ["example.com", /^*.google.com$/] do
-    console.log("hello, world!")
-    # nil
+content_script sites: ["http://www.example.com/", /^*.google.com$/] do |g|
+    p("hello, world!")
+    p window
+    p document
+    p console.log("hello, world2!")
 end
 
 
