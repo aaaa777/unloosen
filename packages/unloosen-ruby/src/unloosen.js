@@ -1,7 +1,5 @@
 import { initVM } from "./index.js";
 
-export const Unloosen = await initVM(buildExtensionURL("ruby-packed.wasm"));
-
 export const UnloosenVersion = "0.0.2";
 const printInitMessage = () => {
     evalRubyCode(`
@@ -19,7 +17,7 @@ export const buildExtensionURL = (filepath) => {
 
 // eval ruby script
 export const evalRubyCode = async (code) => {
-    Unloosen.evalAsync(code);
+    await Unloosen.evalAsync(code);
 }
 
 export const evalRubyFromURL = async (url) => {
@@ -33,8 +31,21 @@ export const evalRubyFromExtension = async (filepath) => {
     await evalRubyFromURL(buildExtensionURL(filepath));
 }
 
+export const loadConfig = async (configKey, defaultVal) => {
+    return await fetch(chrome.runtime.getURL("unloosen.config.json"))
+        .then((response) => { 
+            if(response.ok) {
+                return response.json().then((json) => json[configKey] || defaultVal);
+            } else {
+                return defaultVal;
+            } 
+        });
+}
+
 const main = async () => {
     printInitMessage();
 }
+
+export const Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
 
 await main();

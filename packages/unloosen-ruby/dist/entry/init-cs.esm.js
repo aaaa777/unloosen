@@ -3557,8 +3557,6 @@ const initVM = async(wasmUrl) => {
   return vm;
 };
 
-const Unloosen = await initVM(buildExtensionURL("ruby-packed.wasm"));
-
 const UnloosenVersion = "0.0.2";
 const printInitMessage = () => {
     evalRubyCode(`
@@ -3576,25 +3574,38 @@ const buildExtensionURL = (filepath) => {
 
 // eval ruby script
 const evalRubyCode = async (code) => {
-    Unloosen.evalAsync(code);
+    await Unloosen.evalAsync(code);
 };
 
-const evalRubyFromURL = async (url) => {
-    await fetch(url)
-        .then((response) => response.text())
-        .then((text) => evalRubyCode(text));
+const loadConfig = async (configKey, defaultVal) => {
+    return await fetch(chrome.runtime.getURL("unloosen.config.json"))
+        .then((response) => { 
+            if(response.ok) {
+                return response.json().then((json) => json[configKey] || defaultVal);
+            } else {
+                return defaultVal;
+            } 
+        });
 };
 
-// build chrome-extension:// url and eval ruby script
-const evalRubyFromExtension = async (filepath) => {
-    await evalRubyFromURL(buildExtensionURL(filepath));
-};
-
-const main = async () => {
+const main$1 = async () => {
     printInitMessage();
 };
 
-await main();
+const Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
 
-await evalRubyCode("require 'require'; module Unloosen; CURRENT_EVENT = :content_script; end");
-await evalRubyFromExtension("app.rb");
+await main$1();
+
+const main = async () => {
+    await evalRubyCode("module Unloosen; CURRENT_EVENT = :content_script; end");
+    
+    if(await loadConfig("remote-require", true)) {
+        await evalRubyCode("require 'require_remote'");
+        console.log(await loadConfig("remote-require", true));
+        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
+        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
+    }
+    await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')");
+};
+
+await main();

@@ -1,4 +1,4 @@
 import { evalRubyCode, evalRubyFromExtension } from "../unloosen.js";
 
-evalRubyCode("require 'require'; module Unloosen; CURRENT_EVENT = :popup; end");
-evalRubyFromExtension("app.rb");
+await evalRubyCode("require 'require_remote'; module Unloosen; CURRENT_EVENT = :popup; end");
+await evalRubyFromExtension("app.rb");

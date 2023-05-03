@@ -19,7 +19,7 @@ function variant(basename) {
         ],
         external: [
             'wasmer_wasi_js_bg.wasm',
-        ]
+        ],
     };
   }
 
