@@ -1,6 +1,8 @@
 {
-    "app": "app.rb",
+    "application": "app.rb",
     "ruby.wasm": "ruby-packed.wasm",
+    "remote-require": false,
+
     "background-entry": "package/unloosen-ruby/dist/entry/init-bg.esm.js",
-    "content-scropt-entry": "package/unloosen-ruby/dist/entry/init-cs.esm.js"
+    "content-script-entry": "package/unloosen-ruby/dist/entry/init-cs.esm.js"
 }

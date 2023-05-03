@@ -41,3 +41,28 @@ namespace :extension do
     end
 
 end
+
+namespace :build do
+    desc "rollup"
+    task :npm do
+        sh "cd packages/unloosen-ruby && rollup -c"
+    end
+
+    desc "pack wasm"
+    task :wasm do
+        sh "tools/wasi-vfs pack packages/unloosen-ruby/node_modules/ruby-3_2-wasm-wasi/dist/ruby.debug+stdlib.wasm \
+                --mapdir /unloosen::./lib \
+                --mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils \
+                --output ruby-packed.wasm"
+    end
+end
+
+namespace :setup do
+    task :npm do
+        
+    end
+
+    task :bundler do
+
+    end
+end

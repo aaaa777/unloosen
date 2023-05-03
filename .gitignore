@@ -9,6 +9,7 @@
 
 # rspec failure tracking
 .rspec_status
+.rake_tasks~
 *.gem
 
 /template/*
