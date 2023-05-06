@@ -3592,19 +3592,17 @@ const loadConfig = async (configKey, defaultVal) => {
     return await fetch(chrome.runtime.getURL("unloosen.config.json"))
         .then((response) => { 
             if(response.ok) {
-                return response.json().then((json) => json[configKey] || defaultVal);
+                return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
             } else {
                 return defaultVal;
             } 
         });
 };
+let Unloosen;
 
-const main = async () => {
+(async () => {
+    Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
     printInitMessage();
-};
+})();
 
-const Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
-
-await main();
-
-export { Unloosen, UnloosenVersion, buildExtensionURL, evalRubyCode, evalRubyFromExtension, evalRubyFromURL, loadConfig };
+export { UnloosenVersion, buildExtensionURL, evalRubyCode, evalRubyFromExtension, evalRubyFromURL, loadConfig };

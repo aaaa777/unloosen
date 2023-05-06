@@ -3577,35 +3577,33 @@ const evalRubyCode = async (code) => {
     await Unloosen.evalAsync(code);
 };
 
-const evalRubyFromURL = async (url) => {
-    await fetch(url)
-        .then((response) => response.text())
-        .then((text) => evalRubyCode(text));
-};
-
-// build chrome-extension:// url and eval ruby script
-const evalRubyFromExtension = async (filepath) => {
-    await evalRubyFromURL(buildExtensionURL(filepath));
-};
-
 const loadConfig = async (configKey, defaultVal) => {
     return await fetch(chrome.runtime.getURL("unloosen.config.json"))
         .then((response) => { 
             if(response.ok) {
-                return response.json().then((json) => json[configKey] || defaultVal);
+                return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
             } else {
                 return defaultVal;
             } 
         });
 };
+let Unloosen;
+
+(async () => {
+    Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
+    printInitMessage();
+})();
 
 const main = async () => {
-    printInitMessage();
+    await evalRubyCode("module Unloosen; CURRENT_EVENT = :sandbox; end");
+    
+    if(await loadConfig("remote-require", true)) {
+        await evalRubyCode("require 'require_remote'");
+        console.log(await loadConfig("remote-require", true));
+        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
+        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
+    }
+    await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')");
 };
 
-const Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
-
 await main();
-
-await evalRubyCode("require 'require_remote'; module Unloosen; CURRENT_EVENT = :sandbox; end");
-await evalRubyFromExtension("app.rb");

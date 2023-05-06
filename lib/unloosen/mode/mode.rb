@@ -1,20 +1,13 @@
 module Unloosen; module Mode
     class BaseMode
-        def initialize(enable_all_site: false, site: nil, sites: [])
-            return if ::Unloosen::CURRENT_EVENT != :content_script
+        def initialize(enable: true)
+            @enable = enable
 
-            page_url = JS.global.location.href.inspect[1...-1]
-
-            return yield(JS.global) if match_sites(sites, page_url) || site == page_url || enable_all_site
-
-            
-            
+            return yield(JS.global) if self.should_load?
         end
-        
-        def match_sites(sites, page_url)
-            sites.find do |site|
-                site.match?(page_url)
-            end    
+                
+        def should_load?
+            @enable
         end
     end
 end; end

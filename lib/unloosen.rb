@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 p "unloosened loaded"
-require_relative "unloosen/mode/content-script"
-require_relative "unloosen/toplevel-alias"
+require_relative "unloosen/mode/content_script"
+require_relative "unloosen/mode/background"
 #require_relative "unloosen/compat/rubygems"
 #require_relative "unloosen/js_wrapper"
 #require_relative "unloosen/controller"

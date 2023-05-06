@@ -2,10 +2,8 @@ require_relative "./mode"
 
 module Unloosen::Mode
     class Sandbox < BaseMode
-        def initialize(**kwds, &blk)
-            return if ::Unloosen::CURRENT_EVENT != :sandbox
-
-            super(**kwds, &blk)            
+        def should_load?
+            ::Unloosen::CURRENT_EVENT != :sandbox && super
         end
     end
 end

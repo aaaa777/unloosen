@@ -1,7 +1,19 @@
-// load as module
-// https://blog.holyblue.jp/entry/2022/07/10/182137
 (async() => {
-    // const src = chrome.runtime.getURL("packages/unloosen-ruby/src/content-script.js");
-    const src = chrome.runtime.getURL("packages/unloosen-ruby/dist/unloosen.js");
+    const loadConfig = async (configKey, defaultVal) => {
+        return await fetch(chrome.runtime.getURL("unloosen.config.json"))
+            .then((response) => { 
+                if(response.ok) {
+                    return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
+                } else {
+                    return defaultVal;
+                } 
+            });
+    };
+
+    // load as module
+    // https://blog.holyblue.jp/entry/2022/07/10/182137
+    
+    const path = await loadConfig("sandbox-entry", 'packages/unloosen-ruby/dist/entry/init-sb.esm.js');
+    const src = chrome.runtime.getURL(path);
     await import(src);
 })();

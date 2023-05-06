@@ -3,14 +3,17 @@
     "name": "unloosen-dev",
     "description": "this extension is built by unloosen with ruby!",
     "version": "0.0.1",
+    "action": {
+        "default_popup": "popup.html"
+    },
     "background": {
-        //"service_worker": "packages/unloosen-ruby/dist/unloosen-simple.umd.js"
+        "service_worker": "packages/unloosen-ruby/dist/entry/loader-bg.esm.js",
+        // "service_worker": "background.html",
+        "type": "module"
     },
     "content_scripts": [
         {
             "js": [
-                // "packages/unloosen-ruby/dist/unloosen-simple.umd.js",
-                // "packages/unloosen-ruby/src/inject-script.js"
                 "packages/unloosen-ruby/dist/entry/loader-cs.esm.js"
             ],
             "matches": ["http://www.example.com/"]

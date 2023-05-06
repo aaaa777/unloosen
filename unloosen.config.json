@@ -1,8 +1,8 @@
 {
     "application": "app.rb",
     "ruby.wasm": "ruby-packed.wasm",
-    "remote-require": false,
+    "remote-require": true,
 
-    "background-entry": "package/unloosen-ruby/dist/entry/init-bg.esm.js",
-    "content-script-entry": "package/unloosen-ruby/dist/entry/init-cs.esm.js"
+    "background-entry": "packages/unloosen-ruby/dist/entry/init-bg.esm.js",
+    "content-script-entry": "packages/unloosen-ruby/dist/entry/init-cs.esm.js"
 }
