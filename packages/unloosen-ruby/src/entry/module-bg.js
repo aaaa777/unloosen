@@ -10,7 +10,7 @@ const main = async () => {
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
-    await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')")
+    await evalRubyFromExtension(await loadConfig("application", 'app.rb'));
 }
 
 main();

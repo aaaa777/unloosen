@@ -46,5 +46,6 @@ var VM;
 
 export const init = async () => {
     VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
+    await evalRubyCode('$:.unshift "/unloosen"');
     printInitMessage();
 }

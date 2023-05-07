@@ -3507,6 +3507,7 @@ var VM;
 
 const init = async () => {
     VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
+    await evalRubyCode('$:.unshift "/unloosen"');
     printInitMessage();
 };
 
@@ -3520,7 +3521,7 @@ const main = async () => {
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
-    await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')");
+    await evalRubyCode(buildExtensionURL(await loadConfig("application", 'app.rb')));
 };
 
 main();

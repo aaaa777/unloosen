@@ -3492,6 +3492,17 @@ const evalRubyCode = async (code) => {
     await VM.evalAsync(code);
 };
 
+const evalRubyFromURL = async (url) => {
+    await fetch(url)
+        .then((response) => response.text())
+        .then((text) => evalRubyCode(text));
+};
+
+// build chrome-extension:// url and eval ruby script
+const evalRubyFromExtension = async (filepath) => {
+    await evalRubyFromURL(buildExtensionURL(filepath));
+};
+
 const loadConfig = async (configKey, defaultVal) => {
     return await fetch(chrome.runtime.getURL("unloosen.config.json"))
         .then((response) => { 
@@ -3507,6 +3518,7 @@ var VM;
 
 const init = async () => {
     VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
+    await evalRubyCode('$:.unshift "/unloosen"');
     printInitMessage();
 };
 
@@ -3520,7 +3532,7 @@ const main = async () => {
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
-    await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')");
+    await evalRubyFromExtension(await loadConfig("application", 'app.rb'));
 };
 
 main();

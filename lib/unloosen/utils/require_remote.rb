@@ -1,7 +1,8 @@
 require 'uri'
 require 'js'
 
-module Unloosen; module RequirePatch
+# module Unloosen; module RequirePatch
+class << self
     # @base_uri = nil
     # @pwd_uri = nil
 
@@ -156,6 +157,6 @@ module Unloosen; module RequirePatch
     end
 end; end
 
-module Kernel
-    prepend Unloosen::RequirePatch
-end
+# module Kernel
+#     prepend Unloosen::RequirePatch
+# end
