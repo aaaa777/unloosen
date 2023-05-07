@@ -3472,7 +3472,7 @@ const initVM = async(wasmUrl) => {
   return vm;
 };
 
-const UnloosenVersion = "0.0.2";
+const UnloosenVersion = "0.1.0";
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"
@@ -3517,6 +3517,7 @@ const loadConfig = async (configKey, defaultVal) => {
 var VM;
 
 const init = async () => {
+    if(VM != undefined) return
     VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
     await evalRubyCode('$:.unshift "/unloosen"');
     printInitMessage();

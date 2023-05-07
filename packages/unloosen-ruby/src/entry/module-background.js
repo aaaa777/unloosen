@@ -9,6 +9,11 @@ const main = async () => {
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
+    
+    chrome.runtime.onInstalled.addListener(async () => {
+        await evalRubyCode("module Unloosen; ON_INSTALLED = true; end");
+    });
+
     await evalRubyFromExtension(await loadConfig("application", 'app.rb'));
 }
 

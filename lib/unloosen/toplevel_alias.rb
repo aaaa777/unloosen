@@ -21,6 +21,13 @@ module Unloosen::ToplevelAlias
         Unloosen::Mode::Popup.new(*args, **kwds, &blk)
     end
 
+    def on_installed
+        return unless Unloosen.const_defined?("ON_INSTALLED")
+        chrome.runtime.onInstalled.addListener do
+            yield
+        end
+    end
+
     def alert(message)
         JS.global.alert(message)
     end

@@ -3381,7 +3381,6 @@ class RbError extends Error {
 }
 
 // vm constructor
-
 // import {} from "geteventlisteners"
 
 const consolePrinter = () => {
@@ -3518,6 +3517,7 @@ const loadConfig = async (configKey, defaultVal) => {
 var VM;
 
 const init = async () => {
+    if(VM != undefined) return
     VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
     await evalRubyCode('$:.unshift "/unloosen"');
     printInitMessage();
@@ -3532,6 +3532,11 @@ const main = async () => {
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
+    
+    chrome.runtime.onInstalled.addListener(async () => {
+        await evalRubyCode("module Unloosen; ON_INSTALLED = true; end");
+    });
+
     await evalRubyFromExtension(await loadConfig("application", 'app.rb'));
 };
 

@@ -3,5 +3,7 @@
     "ruby.wasm": "ruby-packed.wasm",
     "remote-require": true,
 
-    "content-script-entry": "packages/unloosen-ruby/dist/entry/module-content-script.esm.js"
+    "content-script-entry": "packages/unloosen-ruby/dist/entry/module-content-script.esm.js",
+    "sandbox-entry": "packages/unloosen-ruby/dist/entry/module-sandbox.esm.js",
+    "popup-entry": "packages/unloosen-ruby/dist/entry/module-popup.esm.js"
 }

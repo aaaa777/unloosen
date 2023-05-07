@@ -16,9 +16,13 @@ JS.global.console.log("load test")
 # when load site
 p Unloosen::CURRENT_EVENT
 
-#on_installed do
-
-#  end
+on_installed do
+    chrome.contextMenus.create({
+        "id": "sampleContextMenu",
+        "title": "Sample Context Menu",
+        "contexts": ["selection"]
+    })
+end
 
 content_script sites: ["http://www.example.com/", /^*.google.com$/] do
     p("hello, world!")
@@ -43,7 +47,7 @@ popup do
     btn.addEventListener('click') do |e|
         res.innerText = ['lucky', 'unlucky'].sample
     end
-    
+
     main_div.innerText = ''
     main_div.appendChild(res)
     main_div.appendChild(btn)
