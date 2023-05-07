@@ -19,6 +19,7 @@ function variant(basename) {
         ],
         external: [
             'wasmer_wasi_js_bg.wasm',
+            '/packages/unloosen-ruby/dist/entry/init-bg.esm.js'
         ],
     };
   }
