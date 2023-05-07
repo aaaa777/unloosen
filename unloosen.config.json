@@ -3,6 +3,6 @@
     "ruby.wasm": "ruby-packed.wasm",
     "remote-require": true,
 
-    "background-entry": "packages/unloosen-ruby/dist/entry/init-bg.esm.js",
-    "content-script-entry": "packages/unloosen-ruby/dist/entry/init-cs.esm.js"
+    "background-entry": "packages/unloosen-ruby/dist/entry/module-bg.esm.js",
+    "content-script-entry": "packages/unloosen-ruby/dist/entry/module-cs.esm.js"
 }

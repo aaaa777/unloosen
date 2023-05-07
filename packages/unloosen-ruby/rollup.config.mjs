@@ -19,7 +19,6 @@ function variant(basename) {
         ],
         external: [
             'wasmer_wasi_js_bg.wasm',
-            '/packages/unloosen-ruby/dist/entry/init-bg.esm.js'
         ],
     };
   }
@@ -27,10 +26,10 @@ function variant(basename) {
 export default [
     variant('index'),
     variant('unloosen'),    
-    variant('entry/init-bg'),
-    variant('entry/init-cs'),
-    variant('entry/init-pu'),
-    variant('entry/init-sb'),
+    variant('entry/module-bg'),
+    variant('entry/module-cs'),
+    variant('entry/module-pu'),
+    variant('entry/module-sb'),
     variant('entry/loader-bg'),
     variant('entry/loader-cs'),
     variant('entry/loader-pu'),
