@@ -15,6 +15,7 @@
     
     const path = await loadConfig("content-script-entry", 'packages/unloosen-ruby/dist/entry/init-cs.esm.js')
     const src = chrome.runtime.getURL(path);
+    console.log('init-cs loaded');
     await import(src);
 })();
 

@@ -7,7 +7,7 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": "packages/unloosen-ruby/dist/entry/loader-bg.esm.js",
+        "service_worker": "packages/unloosen-ruby/dist/entry/init-bg.esm.js",
         // "service_worker": "background.html",
         "type": "module"
     },

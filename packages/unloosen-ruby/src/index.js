@@ -3,7 +3,7 @@
 import { init, WASI } from "@wasmer/wasi"
 import { WasmFs } from '@wasmer/wasmfs'
 import { RubyVM  } from "ruby-3_2-wasm-wasi"
-import {} from "geteventlisteners"
+// import {} from "geteventlisteners"
 
 const consolePrinter = () => {
   let memory = undefined;
@@ -92,19 +92,4 @@ export const initVM = async(wasmUrl) => {
   const { vm } = await UnloosenVM(module)
 
   return vm;
-}
-
-class PromiseFunctions {
-  constructor(ok, fail) {
-    this.okCb = ok
-    this.failCb = fail
-  }
-
-  ok(value) {
-    this.okCb(value)
-  }
-
-  fail(value) {
-    this.failCb(value)
-  }
 }

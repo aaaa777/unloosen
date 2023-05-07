@@ -17,7 +17,7 @@ export const buildExtensionURL = (filepath) => {
 
 // eval ruby script
 export const evalRubyCode = async (code) => {
-    await Unloosen.evalAsync(code);
+    await VM.evalAsync(code);
 }
 
 export const evalRubyFromURL = async (url) => {
@@ -41,9 +41,10 @@ export const loadConfig = async (configKey, defaultVal) => {
             } 
         });
 }
-let Unloosen;
 
-(async () => {
-    Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")))
+var VM;
+
+export const init = async () => {
+    VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
     printInitMessage();
-})()
+}

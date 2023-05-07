@@ -6,7 +6,7 @@ var lookup = [];
 var revLookup = [];
 var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array;
 var inited = false;
-function init () {
+function init$1 () {
   inited = true;
   var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   for (var i = 0, len = code.length; i < len; ++i) {
@@ -20,7 +20,7 @@ function init () {
 
 function toByteArray (b64) {
   if (!inited) {
-    init();
+    init$1();
   }
   var i, j, l, tmp, placeHolders, arr;
   var len = b64.length;
@@ -79,7 +79,7 @@ function encodeChunk (uint8, start, end) {
 
 function fromByteArray (uint8) {
   if (!inited) {
-    init();
+    init$1();
   }
   var tmp;
   var len = uint8.length;
@@ -3380,93 +3380,8 @@ class RbError extends Error {
     }
 }
 
-(function() {
-
-    // save the original methods before overwriting them
-    Element.prototype._addEventListener = Element.prototype.addEventListener;
-    Element.prototype._removeEventListener = Element.prototype.removeEventListener;
-
-    /**
-     * [addEventListener description]
-     * @param {[type]}  type       [description]
-     * @param {[type]}  listener   [description]
-     * @param {Boolean} useCapture [description]
-     */
-    Element.prototype.addEventListener = function(type,listener,useCapture=false) {
-        // declare listener
-        this._addEventListener(type,listener,useCapture);
-
-        if(!this.eventListenerList) this.eventListenerList = {};
-        if(!this.eventListenerList[type]) this.eventListenerList[type] = [];
-
-        // add listener to  event tracking list
-        this.eventListenerList[type].push( {type, listener, useCapture} );
-    };
-
-    /**
-     * [removeEventListener description]
-     * @param  {[type]}  type       [description]
-     * @param  {[type]}  listener   [description]
-     * @param  {Boolean} useCapture [description]
-     * @return {[type]}             [description]
-     */
-    Element.prototype.removeEventListener = function(type,listener,useCapture=false) {
-        // remove listener
-        this._removeEventListener(type,listener,useCapture);
-
-        if(!this.eventListenerList) this.eventListenerList = {};
-        if(!this.eventListenerList[type]) this.eventListenerList[type] = [];
-
-        // Find the event in the list, If a listener is registered twice, one
-        // with capture and one without, remove each one separately. Removal of
-        // a capturing listener does not affect a non-capturing version of the
-        // same listener, and vice versa.
-        for(let i=0; i<this.eventListenerList[type].length; i++){
-            if( this.eventListenerList[type][i].listener===listener && this.eventListenerList[type][i].useCapture===useCapture){
-                this.eventListenerList[type].splice(i, 1);
-                break;
-            }
-        }
-        // if no more events of the removed event type are left,remove the group
-        if(this.eventListenerList[type].length==0) delete this.eventListenerList[type];
-    };
-
-
-    /**
-     * [getEventListeners description]
-     * @param  {[type]} type [description]
-     * @return {[type]}      [description]
-     */
-    Element.prototype.getEventListeners = function(type){
-        if(!this.eventListenerList) this.eventListenerList = {};
-
-        // return reqested listeners type or all them
-        if(type===undefined)  return this.eventListenerList;
-        return this.eventListenerList[type];
-    };
-
-
-    /*
-    Element.prototype.clearEventListeners = function(a){
-        if(!this.eventListenerList)
-            this.eventListenerList = {};
-        if(a==undefined){
-            for(var x in (this.getEventListeners())) this.clearEventListeners(x);
-            return;
-        }
-        var el = this.getEventListeners(a);
-        if(el==undefined)
-            return;
-        for(var i = el.length - 1; i >= 0; --i) {
-            var ev = el[i];
-            this.removeEventListener(a, ev.listener, ev.useCapture);
-        }
-    };
-    */
-
-})();
-
 // vm constructor
+// import {} from "geteventlisteners"
 
 const consolePrinter = () => {
   let memory = undefined;
@@ -3574,7 +3489,7 @@ const buildExtensionURL = (filepath) => {
 
 // eval ruby script
 const evalRubyCode = async (code) => {
-    await Unloosen.evalAsync(code);
+    await VM.evalAsync(code);
 };
 
 const loadConfig = async (configKey, defaultVal) => {
@@ -3587,14 +3502,16 @@ const loadConfig = async (configKey, defaultVal) => {
             } 
         });
 };
-let Unloosen;
 
-(async () => {
-    Unloosen = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
+var VM;
+
+const init = async () => {
+    VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
     printInitMessage();
-})();
+};
 
 const main = async () => {
+    await init();
     await evalRubyCode("module Unloosen; CURRENT_EVENT = :popup; end");
     
     if(await loadConfig("remote-require", true)) {
@@ -3606,4 +3523,4 @@ const main = async () => {
     await evalRubyCode("require('" + await loadConfig("application", 'app.rb') + "')");
 };
 
-await main();
+main();
