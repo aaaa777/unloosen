@@ -2,13 +2,14 @@
   "name": "unloosen-ruby-loader",
   "description": "ruby on wasm for chrome extension",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "main": "./src/index.js",
-  "umd:main": "./dist/index.umd.js",
+  "esm:main": "./dist/index.esm.js",
   "files": [
     "dist",
     "src",
-    "package.json"
+    "package.json",
+    "rollup.config.mjs"
   ],
   "repository": "https://github.com/aaaa777/unloosen.git",
   "scripts": {
@@ -19,8 +20,7 @@
     "@wasmer/wasm-transformer": "^0.12.0",
     "@wasmer/wasmfs": "^0.12.0",
     "fs": "^0.0.1-security",
-    "ruby-3_2-wasm-wasi": "^1.0.1",
-    "ruby-head-wasm-wasi": "^0.3.0"
+    "ruby-3_2-wasm-wasi": "^1.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.2",
@@ -28,9 +28,7 @@
     "@wasmer/wasi": "^1.2.2",
     "@wasmer/wasmfs": "^0.12.0",
     "rollup": "^3.21.2",
-    "rollup-plugin-polyfill-node": "^0.12.0",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "rollup-plugin-polyfill-node": "^0.12.0"
   },
   "externals": {
     "wasmer_wasi_js_bg.wasm": true

@@ -3381,6 +3381,7 @@ class RbError extends Error {
 }
 
 // vm constructor
+
 // import {} from "geteventlisteners"
 
 const consolePrinter = () => {
@@ -3472,7 +3473,7 @@ const initVM = async(wasmUrl) => {
   return vm;
 };
 
-const UnloosenVersion = "0.0.2";
+const UnloosenVersion = "0.1.0";
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"

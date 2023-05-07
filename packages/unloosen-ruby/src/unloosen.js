@@ -1,6 +1,6 @@
 import { initVM } from "./index.js";
 
-export const UnloosenVersion = "0.0.2";
+export const UnloosenVersion = "0.1.0";
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"
