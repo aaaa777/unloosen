@@ -52,9 +52,10 @@ namespace :build do
     desc "pack wasm"
     task :wasm do
         sh "tools/wasi-vfs pack packages/unloosen-ruby/node_modules/ruby-3_2-wasm-wasi/dist/ruby.debug+stdlib.wasm \
-                --mapdir /unloosen::./lib \
-                --mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils \
-                --output ruby-packed.wasm"
+        --mapdir /unloosen::./lib \
+        --mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils \
+        --output ruby-packed.wasm"
+        sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/"
         sh "cp ruby-packed.wasm examples/omikuji-popup/"
     end
 end
