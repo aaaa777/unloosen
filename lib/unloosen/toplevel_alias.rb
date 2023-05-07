@@ -18,6 +18,10 @@ module Unloosen::ToplevelAlias
     def alert(message)
         JS.global.alert(message)
     end
+
+    def fetch(url)
+        JS.global.fetch(url)
+    end
 end
 
 @window = JS.global
@@ -28,7 +32,7 @@ end
 @console = @window.console if @window[:console] != @undefined
 @chrome = @window.chrome if @window[:console] != @undefined
 
-class Kernel << self
+class << self
     include Unloosen::ToplevelAlias
     attr_accessor :window, :document, :console
     attr_accessor :chrome
