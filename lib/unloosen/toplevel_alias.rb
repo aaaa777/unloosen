@@ -1,18 +1,24 @@
+require_relative "mode/content_script"
+require_relative "mode/background"
+require_relative "mode/popup"
+require_relative "mode/sandbox"
+
+
 module Unloosen::ToplevelAlias
     def content_script(*args, **kwds, &blk)
         Unloosen::Mode::ContentScript.new(*args, **kwds, &blk)
     end
     
     def background(*args, **kwds, &blk)
-        Unloosen::Mode::ContentScript.new(*args, **kwds, &blk)
+        Unloosen::Mode::Background.new(*args, **kwds, &blk)
     end
     
     def sandbox(*args, **kwds, &blk)
-        Unloosen::Mode::ContentScript.new(*args, **kwds, &blk)
+        Unloosen::Mode::Sandbox.new(*args, **kwds, &blk)
     end
 
     def popup(*args, **kwds, &blk)
-        Unloosen::Mode::ContentScript.new(*args, **kwds, &blk)
+        Unloosen::Mode::Popup.new(*args, **kwds, &blk)
     end
 
     def alert(message)
