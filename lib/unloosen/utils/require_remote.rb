@@ -138,7 +138,7 @@ module Unloosen; module RequirePatch
         uri_str += suffix if suffix
         p "fetch_remote called #{uri_str}"
 
-        return fetch_remote_text(uri, suffix: ".rb", complete_suffix: false) || fetch_remote_text(uri, suffix: ".so", complete_suffix: false) if complete_suffix && !(/[.](rb|so)$/.match uri_str)
+        return fetch_remote_text(uri, complete_suffix: false) || fetch_remote_text(uri, suffix: ".rb", complete_suffix: false) || fetch_remote_text(uri, suffix: ".so", complete_suffix: false) if complete_suffix && !(/[.](rb|so)$/.match uri_str)
         #sleep(1)
         p "requesting... #{uri_str}"
 
