@@ -1,36 +1,18 @@
 require 'uri'
 require 'js'
 
-# module Unloosen; module RequirePatch
 class << self
-    # @base_uri = nil
-    # @pwd_uri = nil
-
-    # class << self
-    #     attr_accessor :base_uri, :file_pwd, :loaded_uri
-    # end
 
     def add_require_remote_uri(base_uri)
         @base_uris ||= []
         @loaded_uris ||= []
         @failed_uris ||= []
         @base_uris << ::URI.parse(base_uri.chomp('/') + '/')
-        p "add_require_remote_uri WIP"
-        # last_base_uri, last_pwd_uri = @base_uri, @pwd_uri
-
-        # @base_uri = ::URI.parse(base_uri.chomp('/') + '/')
-        # @pwd_uri = @base_uri
-        # require lib
-        # @base_uri = last_base_uri
     end
 
 
     # override require
     def require(lib)
-        
-        p 'require called'
-        p lib
-        # p @pwd_uri
 
         # patch
         return false if lib == 'js'
@@ -49,23 +31,13 @@ class << self
         return true if @base_uris&.find do |base_uri|
             lib_uri = base_uri + lib
             return false if @loaded_uris.include?(lib_uri.to_s)
-
-            p "searching #{lib_uri}"
  
-            # catch 404
-            begin
-                src = fetch_remote_text(lib_uri)
-            rescue => exception
-                puts exception
-                
-                next false
-            end
+            src = fetch_remote_text(lib_uri)
 
-            next unless src
+            next false unless src
             
             # set pwd_uri
             @pwd_uri = lib_uri
-            p "pwd_uri is now `#{@pwd_uri}`"
             
             # eval lib src
             Kernel.eval(
@@ -88,9 +60,11 @@ class << self
 
     def require_relative(lib)
 
-        p "relative called"
+        relative_from = caller_locations(1..1).first
+        relative_from_path = relative_from.absolute_path || relative_from.path
+        absolute_lib = File.expand_path("../#{lib}", relative_from_path)
 
-        return super lib unless @pwd_uri
+        return self.require absolute_lib unless @pwd_uri
         
         # what a...
         if lib == "require_test_library" then
@@ -105,18 +79,13 @@ class << self
         lib_uri = @pwd_uri + lib
         return false if @loaded_uris&.include?(lib_uri.to_s)
 
-        # catch 404
-        begin
-            src = fetch_remote_text(lib_uri)
-        rescue  => exception
-            puts exception
-            # when libs not found in remote
-            return super lib
-        end
+        src = fetch_remote_text(lib_uri)
+
+        # when libs not found in remote
+        return self.require absolute_lib unless src
         
         # set pwd_uri
         @pwd_uri += lib
-        p "pwd_uri is now `#{@pwd_uri}`"
         
         # eval lib src
         Kernel.eval(
@@ -137,26 +106,21 @@ class << self
     def fetch_remote_text(uri, suffix: nil, complete_suffix: true)
         uri_str = uri.to_s
         uri_str += suffix if suffix
-        p "fetch_remote called #{uri_str}"
 
         return fetch_remote_text(uri, complete_suffix: false) || fetch_remote_text(uri, suffix: ".rb", complete_suffix: false) || fetch_remote_text(uri, suffix: ".so", complete_suffix: false) if complete_suffix && !(/[.](rb|so)$/.match uri_str)
-        #sleep(1)
-        p "requesting... #{uri_str}"
 
         return nil if @failed_uris.include?(uri_str)
 
-        res = JS.global.fetch(uri_str).await
-        p res
+        begin
+            res = JS.global.fetch(uri_str).await
+        rescue => exception
+            res = nil
+        end
+
         if !res || !(res[:ok]) then
             @failed_uris << uri_str
-            return
+            return nil
         end
-        text = res.text.await.to_s
-        p text
-        text
+        res.text.await.to_s
     end
-end; end
-
-# module Kernel
-#     prepend Unloosen::RequirePatch
-# end
+end

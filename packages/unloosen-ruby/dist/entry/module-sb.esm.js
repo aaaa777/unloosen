@@ -3517,7 +3517,6 @@ const main = async () => {
     
     if(await loadConfig("remote-require", true)) {
         await evalRubyCode("require 'require_remote'");
-        console.log(await loadConfig("remote-require", true));
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
