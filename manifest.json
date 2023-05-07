@@ -7,13 +7,13 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": "packages/unloosen-ruby/dist/entry/module-bg.esm.js",
+        "service_worker": "packages/unloosen-ruby/dist/entry/module-background.esm.js",
         "type": "module"
     },
     "content_scripts": [
         {
             "js": [
-                "packages/unloosen-ruby/dist/entry/loader-cs.esm.js"
+                "packages/unloosen-ruby/dist/entry/loader-content-script.esm.js"
             ],
             "matches": ["http://www.example.com/"]
         }

@@ -13,9 +13,8 @@
     // load as module
     // https://blog.holyblue.jp/entry/2022/07/10/182137
     
-    const path = await loadConfig("content-script-entry", 'packages/unloosen-ruby/dist/entry/module-cs.esm.js')
+    const path = await loadConfig("content-script-entry", 'packages/unloosen-ruby/dist/entry/module-background.esm.js')
     const src = chrome.runtime.getURL(path);
-    console.log('init-cs loaded');
     await import(src);
 })();
 

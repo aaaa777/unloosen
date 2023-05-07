@@ -13,7 +13,7 @@
     // load as module
     // https://blog.holyblue.jp/entry/2022/07/10/182137
     
-    const path = await loadConfig("sandbox-entry", 'packages/unloosen-ruby/dist/entry/module-sb.esm.js')
+    const path = await loadConfig("popup-entry", 'packages/unloosen-ruby/dist/entry/module-popup.esm.js')
     const src = chrome.runtime.getURL(path);
     await import(src);
 })();

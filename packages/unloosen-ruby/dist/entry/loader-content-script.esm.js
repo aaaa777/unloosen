@@ -8,13 +8,12 @@
                     return defaultVal;
                 } 
             });
-    }
+    };
 
     // load as module
     // https://blog.holyblue.jp/entry/2022/07/10/182137
     
-    const path = await loadConfig("popup-entry", 'packages/unloosen-ruby/dist/entry/module-pu.esm.js')
+    const path = await loadConfig("content-script-entry", 'packages/unloosen-ruby/dist/entry/module-content-script.esm.js');
     const src = chrome.runtime.getURL(path);
     await import(src);
 })();
-
