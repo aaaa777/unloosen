@@ -1,0 +1,5 @@
+{
+    "application": "app.rb",
+    "ruby.wasm": "ruby-packed.wasm",
+    "remote-require": false
+}
