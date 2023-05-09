@@ -3,7 +3,7 @@ module Unloosen; module Mode
         def initialize(enable: true)
             @enable = enable
 
-            return yield(JS.global) if self.should_load?
+            return yield if self.should_load?
         end
                 
         def should_load?

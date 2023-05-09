@@ -1,6 +1,7 @@
 # patched js.rb
 # see also: https://ongaeshi.hatenablog.com/entry/access_properties_from_jsobject_in_function_style
 require "js.so"
+require "json"
 
 # The JS module provides a way to interact with JavaScript from Ruby.
 #
@@ -102,6 +103,12 @@ module JS
       end
       .transfer
   end
+
+  def self.try_convert_hash(obj)
+    return nil unless obj.respond_to?(:to_json)
+    JS.global[:JSON].parse(JS.try_convert(obj.to_json))
+  end
+
 end
 
 class JS::Object
@@ -118,7 +125,7 @@ class JS::Object
 
       super
     when "function"
-      self.call(sym, *args, &block).to_r
+      self.call(sym, *args.map {|arg| arg.to_j }, &block).to_r
     else
       ret.to_r
     end
@@ -190,115 +197,8 @@ class JS::Error
   end
 end
 
-# module Unloosen; module JS
-
-#     Global = ::JS::global
-#     Document = ::JS.global[:document]
-#     Console = ::JS.global[:console]
-
-#     Undefined = ::JS.eval("return undefined")
-#     True = ::JS.eval("return true")
-#     False = ::JS.eval("return false")
-#     Null = ::JS.eval("return null")
-
-#     attr_writer :auto_camelize
-
-#     @auto_camelize = true
-
-#     # monkey patching
-#     class Object
-
-#         def initialize(object)
-#             @object = object
-#         end
-
-#         def [](sym)
-#             @object[sym]
-#         end
-
-#         def []=(sym, val)
-#             @object[sym, val]
-#         end
-
-#         # note: idk how do I get js methods and properties.
-#         #       in addition, for browser, need more simpler logic to reduce code.
-#         def method_missing(sym, *args, &blk)
-
-#             if @object.respond_to?(sym)
-#                 return self.class.new(@object.call(sym, *args, &blk))
-#             end
-            
-#             # ex: add_listen_event => addListenEvent
-#             if self[sym].typeof == "undefined" && @auto_camelize
-#                 sym = sym.camelize
-#             end
-
-#             # call [] if not function
-#             # ex: window.console => window[:console]
-#             if args.empty? && !blk && self[sym].typeof != "function"
-            
-#                 return self[sym]
-
-#             # call imidiately if function
-#             else
-            
-#                 self.call(sym, args, &blk)
-#             end
-            
-#         end
-
-#         # call js function inside itself
-#         def call(sym, *args, &blk)
-#             @object.call(sym, *args.map{|arg| JS.try_convert(arg)}, &blk)
-#         end
-
-#         # ::JS.methods(false).each do |sym|
-#         #     define_method(sym, ::JS.method(sym))
-#         # end
-#     end
-    
-#     class << self
-    
-#         attr_reader :undefined, :true, :false, :null
-#         attr_reader :document, :window, :console
-
-#         def try_convert(obj)
-#             # return JS::Null if obj == nil
-            
-#             ::JS.try_convert(obj)
-#         end
-
-#         def eval(str)
-#             ::JS.eval(str)
-#         end
-        
-#         def self.promise_scheduler
-#             @object.promise_scheduler
-#         end
-#     end
-
-# end; end
-
-# JS::Object.define_method(:to_unloosen_js) {
-#     Unloosen::JS::Object.new(self)
-# }
-
-# # toplevel namespace overrides
-
-# @document = Unloosen::JS::Document
-# @window = Unloosen::JS::Global
-# @console = Unloosen::JS::Console
-
-# class << self
-#     attr_reader :document, :window, :console
-# end
-
-# class Symbol
-
-#     # ex: add_event_listener => addEventListener
-#     def camelize
-#         self.to_s.split("_").map.with_index do |w, i|
-#             i == 0 ? w : w.capitalize
-#         end.join.to_sym
-#     end
-# end
+class Object
+  def to_j
+    jsobj = JS.try_convert(self) || JS.try_convert_hash(self)
+  end
+end
