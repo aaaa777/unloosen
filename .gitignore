@@ -9,8 +9,16 @@
 
 # rspec failure tracking
 .rspec_status
+.rake_tasks~
 *.gem
 
 /template/*
 
 /packages/unloosen-ruby/node_modules
+
+.ruby-version
+
+/vendor/bundle
+/tools/*
+
+!.gitkeep

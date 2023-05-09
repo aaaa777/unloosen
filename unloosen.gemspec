@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "[WIP] create chrome extention with ruby/wasm"
   spec.description   = "[WIP] create chrome extention with ruby/wasm"
   #spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.2.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.2.0-dev")
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 

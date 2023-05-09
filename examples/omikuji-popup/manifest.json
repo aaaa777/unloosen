@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "omikuji-popup",
+    "description": "omikuji popup",
+    "version": "1.0.0",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "app.rb",
+                "ruby-packed.wasm",
+                "unloosen.config.json"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}
