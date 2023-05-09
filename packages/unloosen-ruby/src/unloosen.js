@@ -1,5 +1,8 @@
 import { initVM } from "./index.js";
 
+var VM;
+var awaitVM;
+
 export const UnloosenVersion = "0.1.0";
 const printInitMessage = () => {
     evalRubyCode(`
@@ -8,7 +11,7 @@ const printInitMessage = () => {
         Ruby version: #{RUBY_DESCRIPTION}
         Unloosen version: ${UnloosenVersion}
     INF
-`);
+    `);
 };
 
 export const buildExtensionURL = (filepath) => {
@@ -16,14 +19,18 @@ export const buildExtensionURL = (filepath) => {
 }
 
 // eval ruby script
-export const evalRubyCode = async (code) => {
+export const evalRubyCode = (code) => {
+    VM.eval(code);
+}
+
+export const evalRubyCodeAsync = async (code) => {
     await VM.evalAsync(code);
 }
 
 export const evalRubyFromURL = async (url) => {
     await fetch(url)
         .then((response) => response.text())
-        .then((text) => evalRubyCode(text));
+        .then((text) => evalRubyCodeAsync(text));
 };
 
 // build chrome-extension:// url and eval ruby script
@@ -42,11 +49,11 @@ export const loadConfig = async (configKey, defaultVal) => {
         });
 }
 
-var VM;
-
 export const init = async () => {
-    if(VM != undefined) return
-    VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
-    await evalRubyCode('$:.unshift "/unloosen"');
-    printInitMessage();
+    return initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")))
+        .then(async (vm) => {
+            VM = vm;
+            return evalRubyCode('$:.unshift "/unloosen"');
+        })
+        .then(async () => printInitMessage());
 }

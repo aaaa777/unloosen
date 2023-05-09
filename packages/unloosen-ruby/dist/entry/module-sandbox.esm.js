@@ -3472,6 +3472,8 @@ const initVM = async(wasmUrl) => {
   return vm;
 };
 
+var VM;
+
 const UnloosenVersion = "0.1.0";
 const printInitMessage = () => {
     evalRubyCode(`
@@ -3480,7 +3482,7 @@ const printInitMessage = () => {
         Ruby version: #{RUBY_DESCRIPTION}
         Unloosen version: ${UnloosenVersion}
     INF
-`);
+    `);
 };
 
 const buildExtensionURL = (filepath) => {
@@ -3488,8 +3490,8 @@ const buildExtensionURL = (filepath) => {
 };
 
 // eval ruby script
-const evalRubyCode = async (code) => {
-    await VM.evalAsync(code);
+const evalRubyCode = (code) => {
+    VM.eval(code);
 };
 
 const loadConfig = async (configKey, defaultVal) => {
@@ -3503,21 +3505,21 @@ const loadConfig = async (configKey, defaultVal) => {
         });
 };
 
-var VM;
-
 const init = async () => {
-    if(VM != undefined) return
-    VM = await initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")));
-    await evalRubyCode('$:.unshift "/unloosen"');
-    printInitMessage();
+    return initVM(buildExtensionURL(await loadConfig("ruby.wasm", "ruby.wasm")))
+        .then(async (vm) => {
+            VM = vm;
+            return evalRubyCode('$:.unshift "/unloosen"');
+        })
+        .then(async () => printInitMessage());
 };
 
 const main = async () => {
     await init();
     await evalRubyCode("module Unloosen; CURRENT_EVENT = :sandbox; end");
     
+    await evalRubyCode("require 'require_remote'");
     if(await loadConfig("remote-require", true)) {
-        await evalRubyCode("require 'require_remote'");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
         await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }

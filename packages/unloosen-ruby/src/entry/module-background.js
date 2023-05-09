@@ -1,20 +1,27 @@
-import { buildExtensionURL, evalRubyCode, evalRubyFromExtension, loadConfig, init } from "../unloosen.js";
+import { buildExtensionURL, evalRubyCode, evalRubyCodeAsync, evalRubyFromExtension, loadConfig, init } from "../unloosen.js";
+
+var initAwait;
 
 const main = async () => {
-    await init();
-    await evalRubyCode("module Unloosen; CURRENT_EVENT = :background; end");
+    initAwait = init();
+    await initAwait;
+    evalRubyCode("module Unloosen; CURRENT_EVENT = :background; end");
     
+    evalRubyCode("require 'require_remote'");
     if(await loadConfig("remote-require", true)) {
-        await evalRubyCode("require 'require_remote'");
-        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
-        await evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
+        evalRubyCode("add_require_remote_uri('" + buildExtensionURL('lib') +"')");
+        evalRubyCode("add_require_remote_uri('" + buildExtensionURL('') +"')");
     }
-    
-    chrome.runtime.onInstalled.addListener(async () => {
-        await evalRubyCode("module Unloosen; ON_INSTALLED = true; end");
-    });
-
+ 
     await evalRubyFromExtension(await loadConfig("application", 'app.rb'));
 }
 
+
+const onInstalled = async () => {
+    while(initAwait == undefined) ;
+    await initAwait;
+    evalRubyCode("module Unloosen; ON_INSTALLED = true; end");
+}
+
+chrome.runtime.onInstalled.addListener(onInstalled);
 main();
