@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "edit www.example.com",
+    "description": "this extension is built by unloosen with ruby!",
+    "version": "0.0.1",
+    "content_scripts": [
+        {
+            "js": [
+                "loader-content-script.esm.js"
+            ],
+            "matches": ["http://www.example.com/"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["*"],
+          "matches": ["<all_urls>"]
+        }
+    ]
+}
