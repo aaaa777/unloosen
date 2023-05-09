@@ -39,7 +39,8 @@ export const evalRubyFromExtension = async (filepath) => {
 }
 
 export const loadConfig = async (configKey, defaultVal) => {
-    return await fetch(chrome.runtime.getURL("unloosen.config.json"))
+    try {
+        return await fetch(chrome.runtime.getURL("unloosen.config.json"))
         .then((response) => { 
             if(response.ok) {
                 return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
@@ -47,6 +48,9 @@ export const loadConfig = async (configKey, defaultVal) => {
                 return defaultVal;
             } 
         });
+    } catch {
+        return defaultVal;
+    }
 }
 
 export const init = async () => {
@@ -55,5 +59,5 @@ export const init = async () => {
             VM = vm;
             return evalRubyCode('$:.unshift "/unloosen"');
         })
-        .then(async () => printInitMessage());
+        .then(async (promise) => printInitMessage() || promise);
 }
