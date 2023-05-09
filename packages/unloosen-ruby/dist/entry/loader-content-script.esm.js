@@ -1,13 +1,17 @@
 (async() => {
     const loadConfig = async (configKey, defaultVal) => {
-        return await fetch(chrome.runtime.getURL("unloosen.config.json"))
-            .then((response) => { 
-                if(response.ok) {
-                    return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
-                } else {
-                    return defaultVal;
-                } 
+        try {
+            return await fetch(chrome.runtime.getURL("unloosen.config.json"))
+                .then((response) => { 
+                    if(response.ok) {
+                        return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
+                    } else {
+                        return defaultVal;
+                    } 
             });
+        } catch {
+            return defaultVal;
+        }
     };
 
     // load as module
