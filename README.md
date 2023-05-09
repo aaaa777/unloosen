@@ -65,13 +65,13 @@ when everything goes fine, the header will be "Unloosen Example Page!".
 
 
 # supported function
-|name|class|alias|
+|name|alias|loadfile|
 |:-|:-|:-|
-|[Popup](https://googledoc/popup)|Unloosen::Mode::Popup|popup do {}|
-|[Content Script]()|Unloosen::Mode::ContentScript|content_script do {}|
-|[Background]()|Unloosen::Mode::Background|background do {}|
-|[SandBox]()|Unloosen::Mode::Sandbox|sandbox do {}|
-|[OnInstalled event]()|Unloosen::Mode::OnInstalled|on_installed do {}|
+|[Popup](https://googledoc/popup)|popup|module-popup.esm.js|
+|[Content Script]()|content_script|loader-content-script.esm.js|
+|[Background]()|background|module-background.esm.js|
+|[SandBox]()|sandbox|module-sandbox.esm.js|
+|[OnInstalled event]()|on_installed|module-background.esm.js|
 
 
 
