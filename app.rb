@@ -1,7 +1,12 @@
 
 # p JS.global[:chrome][:runtime].call(:getURL, "manifest.json")
 require "unloosen"
-require "unloosen/toplevel_alias"
+
+# add_require_remote_uri "https://raw.githubusercontent.com/rtomayko/tilt/master/lib/"
+# add_require_remote_uri "https://raw.githubusercontent.com/haml/haml/master/lib/"
+# add_require_remote_uri "https://raw.githubusercontent.com/judofyr/temple/master/lib"
+# require "haml"
+# require "tilt"
 
 # simple unloosen version like sinatro
 #require_relative "lib/unloosen_simple"
@@ -12,12 +17,12 @@ require "unloosen/toplevel_alias"
     "テストメッセージ"
 #end
 p "app loaded"
-JS.global.console.log("load test")
 # when load site
-p Unloosen::CURRENT_EVENT
+p "current_event: #{Unloosen::CURRENT_EVENT}"
+p "on_installed: #{Unloosen.const_defined?("ON_INSTALLED")}"
 
 on_installed do
-    chrome.contextMenus.create({
+    p chrome.contextMenus.create({
         "id": "sampleContextMenu",
         "title": "Sample Context Menu",
         "contexts": ["selection"]
@@ -26,16 +31,11 @@ end
 
 content_script sites: ["http://www.example.com/", /^*.google.com$/] do
     p("hello, world!")
-    p window
-    p document
-    p console.log("hello, world2!")
-    p chrome
     p alert("test")
 end
 
 background do
     console.log("hello, world3!")
-    
 end
 
 popup do

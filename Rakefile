@@ -46,7 +46,7 @@ namespace :build do
     desc "rollup"
     task :npm do
         sh "cd packages/unloosen-ruby && rollup -c"
-        sh "cp packages/unloosen-ruby/dist/entry/module-popup.esm.js examples/omikuji-popup/"
+        #sh "cp packages/unloosen-ruby/dist/entry/module-popup.esm.js examples/omikuji-popup/"
     end
 
     desc "pack wasm"
@@ -55,8 +55,8 @@ namespace :build do
         --mapdir /unloosen::./lib \
         --mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils \
         --output ruby-packed.wasm"
-        sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/"
-        sh "cp ruby-packed.wasm examples/omikuji-popup/"
+        #sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/"
+        #sh "cp ruby-packed.wasm examples/omikuji-popup/"
     end
 end
 
