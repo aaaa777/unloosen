@@ -5,7 +5,10 @@ require "bundler/gem_tasks"
 
 #RSpec::Core::RakeTask.new(:spec)
 
-#task default: :spec
+task default: :nothing
+
+task :nothing do
+end
 
 namespace :extension do
     desc "set bundler config and install dependencies."
