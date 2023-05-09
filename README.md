@@ -59,19 +59,23 @@ access http://www.example.com/
 
 when everything goes fine, the header will be "Unloosen Example Page!".
 
+# template
+
+download this template repository!
+
 
 # how unloosen works
 
 
 
 # supported function
-|name|alias|loadfile|
+|name|method alias|loadfile|
 |:-|:-|:-|
-|[Popup](https://googledoc/popup)|popup|module-popup.esm.js|
-|[Content Script]()|content_script|loader-content-script.esm.js|
-|[Background]()|background|module-background.esm.js|
-|[SandBox]()|sandbox|module-sandbox.esm.js|
-|[OnInstalled event]()|on_installed|module-background.esm.js|
+|[Popup]([https://googledoc/popup](https://developer.chrome.com/docs/extensions/reference/action/#manifest))|popup|module-popup.esm.js|
+|[Content Script](https://developer.chrome.com/docs/extensions/mv3/content_scripts/#static-declarative)|content_script|loader-content-script.esm.js|
+|[Background](https://developer.chrome.com/docs/extensions/mv3/service_workers/basics/#import-scripts)|background|module-background.esm.js|
+|[SandBox(WIP)](https://developer.chrome.com/docs/extensions/mv3/manifest/sandbox/)|sandbox|module-sandbox.esm.js|
+|[OnInstalled event](https://developer.chrome.com/docs/extensions/reference/runtime/#event-onInstalled)|on_installed|module-background.esm.js|
 
 
 
@@ -97,16 +101,6 @@ Or install it yourself as:
 
     $ gem install unloosen
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/unloosen.
+Bug reports and pull requests are welcome on GitHub at https://github.com/aaaa777/unloosen.
