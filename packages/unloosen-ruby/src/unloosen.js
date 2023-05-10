@@ -3,7 +3,7 @@ import { initVM } from "./index.js";
 var VM;
 var awaitVM;
 
-export const UnloosenVersion = "0.1.1";
+export const UnloosenVersion = '[VI]{version}[/VI]';
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"

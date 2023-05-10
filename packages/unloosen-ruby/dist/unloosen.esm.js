@@ -1,3 +1,4 @@
+/* Version: 0.1.1 - May 10, 2023 14:53:42 */
 var global$1 = (typeof global !== "undefined" ? global :
   typeof self !== "undefined" ? self :
   typeof window !== "undefined" ? window : {});
@@ -3474,7 +3475,7 @@ const initVM = async(wasmUrl) => {
 
 var VM;
 
-const UnloosenVersion = "0.1.1";
+const UnloosenVersion = '0.1.1';
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"
