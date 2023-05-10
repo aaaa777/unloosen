@@ -1,3 +1,4 @@
+/* Version: 0.1.1 - May 10, 2023 14:53:36 */
 var global$1 = (typeof global !== "undefined" ? global :
   typeof self !== "undefined" ? self :
   typeof window !== "undefined" ? window : {});

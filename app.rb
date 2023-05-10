@@ -22,11 +22,13 @@ p "current_event: #{Unloosen::CURRENT_EVENT}"
 p "on_installed: #{Unloosen.const_defined?("ON_INSTALLED")}"
 
 on_installed do
-    p chrome.contextMenus.create({
-        "id": "sampleContextMenu",
-        "title": "Sample Context Menu",
-        "contexts": ["selection"]
-    })
+    p chrome.contextMenus.create(
+        JS.try_convert_hash({
+            "id": "sampleContextMenu",
+            "title": "Sample Context Menu",
+            "contexts": ["selection"]
+        })
+    )
 end
 
 content_script sites: ["http://www.example.com/", /^*.google.com$/] do

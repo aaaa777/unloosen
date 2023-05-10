@@ -1,3 +1,4 @@
+/* Version: 0.1.1 - May 10, 2023 14:53:54 */
 var global$1 = (typeof global !== "undefined" ? global :
   typeof self !== "undefined" ? self :
   typeof window !== "undefined" ? window : {});
@@ -3474,7 +3475,7 @@ const initVM = async(wasmUrl) => {
 
 var VM;
 
-const UnloosenVersion = "0.1.0";
+const UnloosenVersion = '0.1.1';
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"
@@ -3512,13 +3513,13 @@ const evalRubyFromExtension = async (filepath) => {
 const loadConfig = async (configKey, defaultVal) => {
     try {
         return await fetch(chrome.runtime.getURL("unloosen.config.json"))
-        .then((response) => { 
-            if(response.ok) {
-                return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
-            } else {
-                return defaultVal;
-            } 
-        });
+            .then((response) => { 
+                if(response.ok) {
+                    return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
+                } else {
+                    return defaultVal;
+                } 
+            });
     } catch {
         return defaultVal;
     }

@@ -125,9 +125,9 @@ class JS::Object
 
       super
     when "function"
-      self.call(sym, *args.map {|arg| arg.to_j }, &block).to_r
+      self.call(sym, *args.map, &block).to_rb
     else
-      ret.to_r
+      ret.to_rb
     end
   end
 
@@ -136,7 +136,7 @@ class JS::Object
     self[sym].typeof != "undefined"
   end
 
-  def to_r
+  def to_rb
     case self.typeof
     when "number"
       self.to_f
@@ -198,7 +198,12 @@ class JS::Error
 end
 
 class Object
-  def to_j
-    jsobj = JS.try_convert(self) || JS.try_convert_hash(self)
+  # def to_js
+  #   return self if self.is_a?(JS::Object)
+  #   JS.try_convert(self) || JS.try_convert_hash(self)
+  # end
+
+  def to_rb
+    self
   end
 end

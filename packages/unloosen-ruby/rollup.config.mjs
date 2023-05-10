@@ -1,6 +1,7 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import inject from "@rollup/plugin-inject";
 import nodePolyfills from "rollup-plugin-polyfill-node";
+import versionInjector from 'rollup-plugin-version-injector';
 
 function variant(basename) {
     return {
@@ -16,6 +17,7 @@ function variant(basename) {
             nodePolyfills(),
             inject({ Buffer: ['buffer', 'Buffer']}),
             nodeResolve(),
+            versionInjector(),
         ],
         external: [
             'wasmer_wasi_js_bg.wasm',
@@ -30,8 +32,5 @@ export default [
     variant('entry/module-content-script'),
     variant('entry/module-popup'),
     variant('entry/module-sandbox'),
-    variant('entry/loader-background'),
     variant('entry/loader-content-script'),
-    variant('entry/loader-popup'),
-    variant('entry/loader-sandbox'),
 ];
