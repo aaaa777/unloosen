@@ -30,8 +30,5 @@ export default [
     variant('entry/module-content-script'),
     variant('entry/module-popup'),
     variant('entry/module-sandbox'),
-    variant('entry/loader-background'),
     variant('entry/loader-content-script'),
-    variant('entry/loader-popup'),
-    variant('entry/loader-sandbox'),
 ];

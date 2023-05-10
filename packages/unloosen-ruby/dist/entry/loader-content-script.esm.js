@@ -17,7 +17,12 @@
     // load as module
     // https://blog.holyblue.jp/entry/2022/07/10/182137
     
-    const path = await loadConfig("content-script-entry", 'module-content-script.esm.js');
-    const src = chrome.runtime.getURL(path);
+    const path = await loadConfig("content-script-entry", undefined);
+    let src;
+    if(path == undefined) {
+        src = 'https://cdn.jsdelivr.net/npm/unloosen-ruby-loader@latest/dist/entry/module-content-script.esm.js';
+    } else {
+        src = chrome.runtime.getURL(path);
+    }
     await import(src);
 })();

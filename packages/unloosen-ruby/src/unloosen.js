@@ -3,7 +3,7 @@ import { initVM } from "./index.js";
 var VM;
 var awaitVM;
 
-export const UnloosenVersion = "0.1.0";
+export const UnloosenVersion = "0.1.1";
 const printInitMessage = () => {
     evalRubyCode(`
     puts <<~"INF"
@@ -41,13 +41,13 @@ export const evalRubyFromExtension = async (filepath) => {
 export const loadConfig = async (configKey, defaultVal) => {
     try {
         return await fetch(chrome.runtime.getURL("unloosen.config.json"))
-        .then((response) => { 
-            if(response.ok) {
-                return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
-            } else {
-                return defaultVal;
-            } 
-        });
+            .then((response) => { 
+                if(response.ok) {
+                    return response.json().then((json) => json[configKey] == undefined ? defaultVal : json[configKey]);
+                } else {
+                    return defaultVal;
+                } 
+            });
     } catch {
         return defaultVal;
     }
