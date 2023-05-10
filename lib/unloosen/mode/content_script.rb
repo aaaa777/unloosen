@@ -12,7 +12,7 @@ module Unloosen::Mode
         end
 
         def should_load?
-            ::Unloosen::CURRENT_EVENT == :content_script && super && @sites.find { |s| s.match?(@page_url) } || @site&.match?(@page_url) || @enable_all_site
+            ::Unloosen::CURRENT_EVENT == :content_script && super && @sites.find { |s| s.match?(@page_url) } || (@site && @page_url&.match?(@site)) || @enable_all_site
         end
     end
 end
