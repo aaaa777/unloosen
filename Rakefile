@@ -53,13 +53,24 @@ namespace :build do
     end
 
     desc "pack wasm"
-    task :wasm do
-        sh "tools/wasi-vfs pack packages/unloosen-ruby/node_modules/ruby-3_2-wasm-wasi/dist/ruby.debug+stdlib.wasm \
-        --mapdir /unloosen::./lib \
-        --mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils \
-        --output ruby-packed.wasm"
-        #sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/"
-        #sh "cp ruby-packed.wasm examples/omikuji-popup/"
+    task :wasm, ['bundle-gem', 'copy'] do |task, args|
+        wasm_path = "packages/unloosen-ruby/node_modules/ruby-3_2-wasm-wasi/dist/ruby.debug+stdlib.wasm"
+        opts = [
+            "--mapdir /unloosen::./lib",
+            "--mapdir /usr/local/lib/ruby/site_ruby/3.2.0::./lib/unloosen/utils"
+        ]
+        
+        opts << "--mapdir /gems::vendor/bundle/ruby/3.2.0/gems" if args.to_a.include?('bundle-gem') && Dir.glob("vendor/bundle/ruby/3.2.0/gems/*")
+
+        sh "tools/wasi-vfs pack #{wasm_path} " \
+            + opts.join(" ") \
+            + " --output ruby-packed.wasm"
+        
+        if args.to_a.include?('copy') then
+            sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/ruby.wasm"
+            sh "cp ruby-packed.wasm examples/omikuji-popup/ruby.wasm"
+            sh "cp ruby-packed.wasm examples/simple-content-script/ruby.wasm"
+        end
     end
 end
 
