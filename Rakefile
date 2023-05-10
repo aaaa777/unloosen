@@ -68,7 +68,7 @@ namespace :build do
 end
 
 namespace :copy do
-    desc "copy files"
+    desc "copy wasm into examples"
     task :wasm, ['example'] do |task, args|
         sh "cp ruby-packed.wasm packages/unloosen-ruby/dist/ruby.wasm"
         if args.to_a.include?('example') then
@@ -76,8 +76,15 @@ namespace :copy do
             sh "cp ruby-packed.wasm examples/simple-content-script/ruby.wasm"
         end
     end
+
+    desc "copy readme into npm package"
+    task :readme do
+        sh "cp -p README.md packages/unloosen-ruby/"
+    end
 end
 
+namespace :version do
+end
 
 
 namespace :setup do
