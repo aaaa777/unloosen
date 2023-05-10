@@ -16,13 +16,11 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "@wasmer/wasi": "^1.2.2",
-    "@wasmer/wasm-transformer": "^0.12.0",
-    "@wasmer/wasmfs": "^0.12.0",
-    "fs": "^0.0.1-security",
     "ruby-3_2-wasm-wasi": "^1.0.1"
   },
   "devDependencies": {
+    "@wasmer/wasm-transformer": "^0.12.0",
+    "fs": "^0.0.1-security",
     "@rollup/plugin-inject": "^5.0.3",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@wasmer/wasi": "^1.2.2",
