@@ -16,5 +16,5 @@ popup do
     # load main contents
     main_div = document.getElementsByClassName('omikuji')[0]
     main_div.innerText = ''
-    [result, button].each do {|e| main_div.appendChild(e) }
+    [result, button].each { |e| main_div.appendChild(e) }
 end
