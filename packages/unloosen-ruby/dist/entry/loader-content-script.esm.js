@@ -1,4 +1,4 @@
-/* Version: 0.1.1 - May 10, 2023 20:07:11 */
+/* Version: 0.1.2 - May 11, 2023 12:45:32 */
 (async() => {
     const loadConfig = async (configKey, defaultVal) => {
         try {
